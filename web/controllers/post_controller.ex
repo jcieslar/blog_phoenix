@@ -9,7 +9,7 @@ defmodule BlogPhoenix.PostController do
   plug :action
 
   def index(conn, _params) do
-    posts = Repo.all(Post)
+    posts = Repo.all(Post) |> Repo.preload([:comments])
     render(conn, "index.html", posts: posts)
   end
 

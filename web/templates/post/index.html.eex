@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th>Title</th>
-      <th>Body</th>
+      <th>Comments</th>
 
       <th></th>
     </tr>
@@ -13,7 +13,7 @@
 <%= for post <- @posts do %>
     <tr>
       <td><%= post.title %></td>
-      <td><%= post.body %></td>
+      <td><%= Enum.count(post.comments) %></td>
 
       <td class="text-right">
         <%= link "Show", to: post_path(@conn, :show, post), class: "btn btn-default btn-xs" %>
