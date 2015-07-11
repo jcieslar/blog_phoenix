@@ -17,6 +17,7 @@ defmodule BlogPhoenix.Router do
 
     get "/", PageController, :index
     resources "/posts", PostController
+    post "/posts/:post_id/comment", PostController, :add_comment
   end
 
   # Other scopes may use custom stacks.

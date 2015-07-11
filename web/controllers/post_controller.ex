@@ -2,8 +2,10 @@ defmodule BlogPhoenix.PostController do
   use BlogPhoenix.Web, :controller
 
   alias BlogPhoenix.Post
+  alias BlogPhoenix.Comment
 
   plug :scrub_params, "post" when action in [:create, :update]
+  plug :scrub_params, "comment" when action in [:add_comment]
   plug :action
 
   def index(conn, _params) do
@@ -31,8 +33,9 @@ defmodule BlogPhoenix.PostController do
   end
 
   def show(conn, %{"id" => id}) do
-    post = Repo.get(Post, id)
-    render(conn, "show.html", post: post)
+    post = Repo.get(Post, id) |> Repo.preload([:comments])
+    changeset = Comment.changeset(%Comment{})
+    render(conn, "show.html", post: post, changeset: changeset)
   end
 
   def edit(conn, %{"id" => id}) do
@@ -63,5 +66,20 @@ defmodule BlogPhoenix.PostController do
     conn
     |> put_flash(:info, "Post deleted successfully.")
     |> redirect(to: post_path(conn, :index))
+  end
+
+  def add_comment(conn, %{"comment" => comment_params, "post_id" => post_id}) do
+    changeset = Comment.changeset(%Comment{}, Map.put(comment_params, "post_id", post_id))
+    post = Repo.get(Post, post_id) |> Repo.preload([:comments])
+
+    if changeset.valid? do
+      Repo.insert(changeset)
+
+      conn
+      |> put_flash(:info, "Comment added.")
+      |> redirect(to: post_path(conn, :show, post))
+    else
+      render(conn, "show.html", post: post, changeset: changeset)
+    end
   end
 end
