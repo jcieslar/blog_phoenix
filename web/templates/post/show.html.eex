@@ -1,18 +1,11 @@
-<h2>Show post</h2>
+<h2><%= @post.title %></h2>
+<div>
+  <%= @post.body %>
+</div>
 
 <%= render "comment_form.html", post: @post, changeset: @changeset,
                                 action: post_path(@conn, :add_comment, @post) %>
 
-  <li>
-    <strong>Title:</strong>
-    <%= @post.title %>
-  </li>
-
-  <li>
-    <strong>Body:</strong>
-    <%= @post.body %>
-  </li>
-
-</ul>
+<%= render "comments.html", post: @post %>
 
 <%= link "Back", to: post_path(@conn, :index) %>
