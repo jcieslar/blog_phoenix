@@ -6,7 +6,6 @@ defmodule BlogPhoenix.PostController do
 
   plug :scrub_params, "post" when action in [:create, :update]
   plug :scrub_params, "comment" when action in [:add_comment]
-  plug :action
 
   def index(conn, _params) do
     posts = Repo.all(Post) |> Repo.preload([:comments])
