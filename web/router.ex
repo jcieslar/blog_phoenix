@@ -15,7 +15,7 @@ defmodule BlogPhoenix.Router do
   scope "/", BlogPhoenix do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/", PostController, :index
     resources "/posts", PostController
     post "/posts/:post_id/comment", PostController, :add_comment
   end
