@@ -4,7 +4,7 @@
 </div>
 
 <%= render "comment_form.html", post: @post, changeset: @changeset,
-                                action: post_path(@conn, :add_comment, @post) %>
+                                action: post_post_path(@conn, :add_comment, @post) %>
 
 <%= render "comments.html", post: @post %>
 
