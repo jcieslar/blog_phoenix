@@ -8,7 +8,9 @@ defmodule BlogPhoenix.PostController do
   plug :scrub_params, "comment" when action in [:add_comment]
 
   def index(conn, _params) do
-    posts = Repo.all(Post) |> Repo.preload([:comments])
+    posts = Post
+    |> Post.count_comments
+    |> Repo.all
     render(conn, "index.html", posts: posts)
   end
 

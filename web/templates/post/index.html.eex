@@ -1,5 +1,4 @@
 <h2>Listing posts</h2>
-
 <table class="table">
   <thead>
     <tr>
@@ -10,10 +9,10 @@
     </tr>
   </thead>
   <tbody>
-<%= for post <- @posts do %>
+<%= for {post, count} <- @posts do %>
     <tr>
       <td><%= post.title %></td>
-      <td><%= Enum.count(post.comments) %></td>
+      <td><%= count %></td>
 
       <td class="text-right">
         <%= link "Show", to: post_path(@conn, :show, post), class: "btn btn-default btn-xs" %>
